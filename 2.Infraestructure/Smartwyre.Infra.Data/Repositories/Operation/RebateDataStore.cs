@@ -31,7 +31,8 @@ namespace Smartwyre.Infra.Data.Repositories.Operation
 
         public void StoreCalculationResult(Rebate account, decimal rebateAmount)
         {
-            // Update account in database, code removed for brevity
+           account.Amount = rebateAmount;
+           this.Update(account);
         }
     }
 }
