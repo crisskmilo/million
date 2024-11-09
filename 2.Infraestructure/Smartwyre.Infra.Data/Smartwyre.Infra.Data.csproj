@@ -1,0 +1,19 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+  </PropertyGroup>
+  <ItemGroup>
+    <PackageReference Include="BIM_ISO8583" />
+    <PackageReference Include="Dapper" />
+    <PackageReference Include="Dapper.Contrib" />
+    <PackageReference Include="ISO8583" />
+    <PackageReference Include="Microsoft.Extensions.Options" />
+    <PackageReference Include="Newtonsoft.Json" />
+    <PackageReference Include="SSH.NET" />
+    <PackageReference Include="StackExchange.Redis.Extensions.Core" />
+    <PackageReference Include="System.Data.SqlClient" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\1.Domain\Smartwyre.Domain.Interfaces\Smartwyre.Domain.Interfaces.csproj" />
+  </ItemGroup>
+</Project>
