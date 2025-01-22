@@ -44,7 +44,7 @@ namespace Million.Domain.Services.Operation
                 IdProperty = propertyImage.IdProperty,
                 File = propertyImage.File,
                 Enabled = true
-            });
+            });            
         }
 
         public async Task<int> DeletePropertyImage(int Id)
