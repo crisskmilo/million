@@ -1,0 +1,8 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+  </PropertyGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\1.Domain\Million.Domain.Entities\Million.Domain.Entities.csproj" />
+  </ItemGroup>
+</Project>
