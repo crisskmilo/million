@@ -8,6 +8,8 @@ using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Xunit;
+using Million.Domain.Entities.Request;
+using Newtonsoft.Json.Linq;
 
 namespace Million.DeveloperTest.Tests;
 
@@ -44,16 +46,68 @@ public class PropertyServiceTests
             CodeInternal = CodeInternal,
             Year = Year
         };
-        /*
-        mockPropertyRepository
-            .Setup(st => st.GetProperty(propertyIdentifier))
-            .Returns(property);
 
-        mockPropertyRepository
-            .Setup(st => st.StoreCalculationResult(property,10));*/
+        Property propertyRes = new Property()
+        {
+            Name = Name,
+            Address = Address,
+            Price = Price,
+            CodeInternal = CodeInternal,
+            Year = Year,
+            IdProperty = 1
+        };
+
+        mockRepository
+            .Setup(st => st.AddAsync(property))
+            .ReturnsAsync(propertyRes);
 
         var result = await propertyService.AddProperty(property);
 
         Assert.InRange(result.IdProperty,1,5);
+    }
+
+    [Theory]
+    [InlineData(1, 100)]
+    [InlineData(2, 200)]
+    [InlineData(3, 300)]
+    public async Task Change_Property_Price(int IdProperty, decimal Price)
+    {
+        PropertyPriceRequestDto propertyPrice = new PropertyPriceRequestDto()
+        {
+            IdProperty = IdProperty,
+            Price = Price,
+        };
+
+        Property propertyReq = new Property()
+        {
+            Name = "Prop1",
+            Address = "street",
+            Price = 50,
+            CodeInternal = 1,
+            Year = new DateTime(2025, 01, 01),
+            IdProperty = IdProperty
+        };
+
+        Property propertyRes = new Property()
+        {
+            Name = "Prop1",
+            Address = "street",
+            Price = Price,
+            CodeInternal = 1,
+            Year = new DateTime(2025,01,01),
+            IdProperty = IdProperty
+        };
+
+        mockRepository
+            .Setup(st => st.GetByIdAsync(IdProperty))
+            .ReturnsAsync(propertyReq);
+
+        mockRepository
+            .Setup(st => st.UpdateAsync(propertyRes))
+            .ReturnsAsync(propertyRes);
+
+        var result = await propertyService.ChangePrice(propertyPrice);
+
+        Assert.Equal(result.Price, Price);
     }
 }
