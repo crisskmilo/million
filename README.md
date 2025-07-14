@@ -11,27 +11,8 @@ Project Structure
 4.WebApi (Presentation): Contains the controllers and exposes the functionalities.
 5.Test: Contains tests on the services.
 
-├── Millions
-├── 1.Domain
-│ ├── Entities
-│ |── Interfaces
-| └── Services
-|
-├── 2.Application
-│ ├── Services
-│ └── Interfaces
-|
-├── 3.Infrastructure
-│ ├── Data
-│ ├── IoC
-│ └── Migrations
-|
-├── 4.WebApi
-│ ├── Controllers
-│ └── Program.cs
-|
-└── 4. Test
-└──Unit test
+![million01](https://github.com/user-attachments/assets/5232018d-3d31-4c8b-b4bb-f54ee12e2b34)
+
 
 This project uses Entity Framework with a code-first approach; to generate the database for the first time or run a migration
 it must be positioned in the project 3.Infraestructure\Million.Infra.Data, also you should add data.
@@ -44,15 +25,9 @@ Updating the database dotnet ef --verbose --project 3.Infraestructure\Million.In
 
 A user must be created to allow authentication in the system and obtain a token to invoke the other functionalities.
 
-Objects are:
-    ● Owner
-    ● Property
-    ● Property Image
-    ● Property Trace
+![MillionDb](https://github.com/user-attachments/assets/47e0bd17-e951-42c5-97dc-6db007019f35)
 
-Main functionalities are:
-    ● Create Property Building
-    ● Add Image from property
-    ● Change Price
-    ● Update property
-    ● List property with filters
+
+Objects are: Owner, Property, Property Image, Property Trace
+
+Main functionalities are: Create Property Building, Add Image from property, Change Price, Update property, List property with filters
