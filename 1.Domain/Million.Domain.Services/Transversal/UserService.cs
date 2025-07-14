@@ -5,7 +5,6 @@
     using Million.Domain.Entities.ErrorHandler;
     using Million.Domain.Interfaces.Repositories.Transversal;
     using Million.Domain.Interfaces.Services;
-    using Million.Domain.Services.Services;
     using Million.Domain.Services.Transversal.Validator;
     using System;
     using System.Collections.Generic;

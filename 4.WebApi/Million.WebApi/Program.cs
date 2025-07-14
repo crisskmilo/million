@@ -29,9 +29,12 @@ builder.Services.Add(new DependencyInjector().GetServiceCollection());
 var appSettings = builder.Configuration.GetSection("AppSettings").Get<AppSettings>();
 builder.Services.Configure<AppSettings>(builder.Configuration.GetSection("AppSettings"));
 
-builder.Services.AddDbContext<AppDbContext>(options =>
-    options.UseSqlServer(appSettings.DefaultConnection),
-    ServiceLifetime.Singleton);
+builder.Services.AddDbContext<AppDbContext>((serviceProvider, options) =>
+{
+    var configuration = serviceProvider.GetRequiredService<IConfiguration>();
+    var connectionString = configuration.GetSection("AppSettings:DefaultConnection").Value;
+    options.UseSqlServer(connectionString);
+}, ServiceLifetime.Singleton);
 
 // Configuración de servicios
 builder.Services.AddCors(options =>
@@ -102,31 +105,34 @@ app.Run();
 // Función para agregar Swagger
 void AddSwagger(IServiceCollection services)
 {
+    var configuration = builder.Configuration.GetSection("Swagger");
+    var contactSection = configuration.GetSection("Contact");
+    var securitySection = configuration.GetSection("Security");
+
     services.AddSwaggerGen(options =>
     {
-        var groupName = "v1";
+        var groupName = configuration["Version"] ?? "v1";
         options.SwaggerDoc(groupName, new OpenApiInfo
         {
-            Title = $"Million API {groupName}",
+            Title = configuration["Title"] ?? $"Million API {groupName}",
             Version = groupName,
-            Description = "Million API",
+            Description = configuration["Description"] ?? "Million API",
             Contact = new OpenApiContact
             {
-                Name = "",
-                Email = "",
-                Url = new Uri("https://www.linkedin.com/in/"),
+                Name = contactSection["Name"] ?? "",
+                Email = contactSection["Email"] ?? "",
+                Url = new Uri(contactSection["Url"] ?? "https://www.linkedin.com/in/")
             }
         });
 
         var jwtSecurityScheme = new OpenApiSecurityScheme
         {
-            Scheme = "bearer",
-            BearerFormat = "JWT",
-            Name = "JWT Authentication",
+            Scheme = securitySection["Scheme"] ?? "bearer",
+            BearerFormat = securitySection["BearerFormat"] ?? "JWT",
+            Name = securitySection["Name"] ?? "JWT Authentication",
             In = ParameterLocation.Header,
             Type = SecuritySchemeType.Http,
-            Description = "Put **_ONLY_** your JWT Bearer token on textbox below!",
-
+            Description = securitySection["Description"] ?? "Put **_ONLY_** your JWT Bearer token on textbox below!",
             Reference = new OpenApiReference
             {
                 Id = JwtBearerDefaults.AuthenticationScheme,

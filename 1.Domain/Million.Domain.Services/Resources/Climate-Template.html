@@ -1,0 +1,93 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Weather Information</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #f4f6f8;
+            margin: 0;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 700px;
+            margin: 0 auto;
+        }
+
+        .card {
+            background: #fff;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.07);
+            margin-bottom: 24px;
+            padding: 24px;
+        }
+
+        .card-title {
+            font-size: 1.3em;
+            margin-bottom: 12px;
+            color: #333;
+        }
+
+        .weather-row {
+            margin-bottom: 8px;
+        }
+
+        .weather-label {
+            font-weight: bold;
+            color: #555;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 12px;
+        }
+
+        th, td {
+            border: 1px solid #e0e0e0;
+            padding: 8px 10px;
+            text-align: center;
+        }
+
+        th {
+            background: #f0f0f0;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+
+        <!-- Card for Current Weather -->
+        <div class="card" id="current-weather-card">
+            <div class="card-title">Current Weather</div>
+            <div class="weather-row"><span class="weather-label">Location:</span> <span id="cw-location"></span></div>
+            <div class="weather-row"><span class="weather-label">Date:</span> <span id="cw-date"></span></div>
+            <div class="weather-row"><span class="weather-label">Temperature:</span> <span id="cw-temp"></span> °C</div>
+            <div class="weather-row"><span class="weather-label">Min Temperature:</span> <span id="cw-min"></span> °C</div>
+            <div class="weather-row"><span class="weather-label">Max Temperature:</span> <span id="cw-max"></span> °C</div>
+            <div class="weather-row"><span class="weather-label">Weather:</span> <span id="cw-weather"></span></div>
+            <div class="weather-row"><span class="weather-label">Description:</span> <span id="cw-desc"></span></div>
+        </div>
+
+        <!-- Card for 5-Day Forecast -->
+        <div class="card" id="forecast-card">
+            <div class="card-title">5-Day Forecast</div>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Date</th>
+                        <th>Min Temperature (°C)</th>
+                        <th>Max Temperature (°C)</th>
+                    </tr>
+                </thead>
+                <tbody id="forecast-table-body">
+                    <!-- Forecast rows go here -->
+                </tbody>
+            </table>
+        </div>
+
+    </div>
+</body>
+</html>

@@ -12,4 +12,26 @@
   <ItemGroup>
     <ProjectReference Include="..\Million.Domain.Interfaces\Million.Domain.Interfaces.csproj" />
   </ItemGroup>
+  <ItemGroup>
+    <Content Include="Resources\**\*.*">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Remove="Resources\Resource.resx" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Remove="Resources\Emails.csv" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Update="Resources\Resource.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Resource.resx</DependentUpon>
+    </Content>
+    <Content Update="Resources\Resource.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resource.Designer.cs</LastGenOutput>
+    </Content>
+  </ItemGroup>
 </Project>

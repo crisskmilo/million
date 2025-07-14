@@ -5,7 +5,7 @@ using Million.Domain.Entities.Request;
 using Million.Domain.Interfaces.Repositories.Operation;
 using Million.Domain.Interfaces.Repositories.Transversal;
 using Million.Domain.Interfaces.Services.Operation;
-using Million.Domain.Services.Services;
+using Million.Domain.Services.Transversal;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
