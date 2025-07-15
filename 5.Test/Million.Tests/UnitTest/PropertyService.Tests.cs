@@ -11,7 +11,7 @@ using Xunit;
 using Million.Domain.Entities.Request;
 using Million.Domain.Entities.Dto.Transversal;
 
-namespace Million.DeveloperTest.Tests;
+namespace Million.DeveloperTest.Tests.UnitTest;
 
 public class PropertyServiceTests
 {

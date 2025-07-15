@@ -10,8 +10,9 @@ using Million.Domain.Entities.Request;
 using System.Net;
 using System.Xml.Linq;
 using System;
+using Million.Domain.Interfaces.Transversal;
 
-namespace Million.DeveloperTest.Tests;
+namespace Million.DeveloperTest.Tests.UnitTest;
 
 public class PropertyImageServiceTests
 {
@@ -20,6 +21,7 @@ public class PropertyImageServiceTests
     private readonly Mock<IPropertyImageRepository> mockPropertyImageRepository;
     private readonly Mock<IRepository<PropertyImage>> mockRepository;
     private readonly Mock<IConfiguration> mockConfiguration;
+    private readonly Mock<IApiClientConsumerStrategyContext> mockApiClientContext; // Added mock for IApiClientConsumerStrategyContext
     private readonly PropertyImageService propertyImageService;
 
     public PropertyImageServiceTests()
@@ -29,7 +31,15 @@ public class PropertyImageServiceTests
         mockPropertyImageRepository = mockRepositories.Create<IPropertyImageRepository>();
         mockRepository = mockRepositories.Create<IRepository<PropertyImage>>();
         mockConfiguration = mockRepositories.Create<IConfiguration>();
-        propertyImageService = new PropertyImageService(mockPropertyImageRepository.Object, mockRepository.Object, mockConfiguration.Object);
+        mockApiClientContext = mockRepositories.Create<IApiClientConsumerStrategyContext>(); // Initialize the mock
+
+        // Updated constructor to include the required parameter
+        propertyImageService = new PropertyImageService(
+            mockPropertyImageRepository.Object,
+            mockRepository.Object,
+            mockConfiguration.Object,
+            mockApiClientContext.Object
+        );
     }
 
     [Theory]
@@ -44,7 +54,7 @@ public class PropertyImageServiceTests
             Address = "Street2",
             Price = 100,
             CodeInternal = 1,
-            Year = new DateTime(2025,01,01),
+            Year = new DateTime(2025, 01, 01),
             IdProperty = 1
         };
 
