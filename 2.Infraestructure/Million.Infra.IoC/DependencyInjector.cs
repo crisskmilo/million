@@ -1,7 +1,6 @@
 ﻿namespace Million.Infra.IoC
 {
     using Million.Domain.Interfaces.Services;
-    using Million.Domain.Services.Services;
     using Microsoft.Extensions.DependencyInjection;
     using Million.Domain.Interfaces.Repositories.Transversal;
     using Million.Infra.Data.Repositories.Transversal;
@@ -15,6 +14,7 @@
     using Million.Domain.Interfaces.Services.Operation;
     using Million.Application.Interfaces.Operation;
     using Million.Application.Services.Operation;
+    using Million.Domain.Interfaces.Transversal;
 
     public class DependencyInjector
     {
@@ -38,12 +38,15 @@
 
             services.AddSingleton(typeof(IBaseService<>), typeof(BaseService<>));
             services.AddSingleton<IAuthorizationService, AuthorizationService>();
+            services.AddSingleton<IApiClientConsumerStrategy, ApiClientConsumerStrategy>();
+            services.AddSingleton<IApiClientConsumerStrategyContext, ApiClientConsumerStrategyContext>();
             services.AddSingleton<IUserService, UserService>();
             services.AddSingleton<IOwnerService, OwnerService>();
             services.AddSingleton<IPropertyService, PropertyService>();
             services.AddSingleton<IPropertyImageService, PropertyImageService>();
             services.AddSingleton<IPropertyTraceService, PropertyTraceService>();
-
+            services.AddSingleton<IClimateService, ClimateService>();
+            
             services.AddSingleton(typeof(IBaseApplication<>), typeof(BaseApplication<>));            
             services.AddSingleton<IAuthenticationApplication, AuthenticationApplication>();
             services.AddSingleton<IAuthorizationApplication, AuthorizationApplication>();
@@ -52,6 +55,7 @@
             services.AddSingleton<IPropertyApplication, PropertyApplication>();
             services.AddSingleton<IPropertyImageApplication, PropertyImageApplication>();
             services.AddSingleton<IPropertyTraceApplication, PropertyTraceApplication>();
+            services.AddSingleton<IClimateApplication, ClimateApplication>();
 
             return services;
         }

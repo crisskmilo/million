@@ -1,4 +1,4 @@
-﻿namespace Million.Domain.Services.Services
+﻿namespace Million.Domain.Services.Transversal
 {
     using System.Collections.Generic;
     using System.Threading.Tasks;
@@ -9,7 +9,7 @@
     /// 
     /// </summary>
     /// <typeparam name="T"></typeparam>
-    /// <seealso cref="Million.Domain.Interfaces.Interfaces.IBaseService{T}" />
+    /// <seealso cref="Interfaces.Interfaces.IBaseService{T}" />
     public class BaseService<T> : IBaseService<T> where T : class
     {
         private readonly IBaseRepository<T> baseRepository;
@@ -29,7 +29,7 @@
         /// <returns></returns>
         public Task<IEnumerable<T>> ExecuteProcedure(string procedure)
         {
-            return this.baseRepository.ExecuteStoreProcedure(procedure);
+            return baseRepository.ExecuteStoreProcedure(procedure);
         }
 
         /// <summary>
@@ -40,7 +40,7 @@
         /// <returns></returns>
         public Task<IEnumerable<T>> ExecuteProcedureWithParams(string procedure, T myObject)
         {
-            return this.baseRepository.ExecuteStoreProcedureParams(procedure, myObject);
+            return baseRepository.ExecuteStoreProcedureParams(procedure, myObject);
         }
 
         /// <summary>
@@ -51,7 +51,7 @@
         /// <returns></returns>
         public virtual Task<IEnumerable<T>> ExecuteInsertProcedure(string procedure, T myObject)
         {
-            return this.ExecuteProcedureWithParams(procedure, myObject);
+            return ExecuteProcedureWithParams(procedure, myObject);
         }
 
         /// <summary>
@@ -62,7 +62,7 @@
         /// <returns></returns>
         public virtual Task<IEnumerable<T>> ExecuteProcedureWithParams(string procedure, object myObject)
         {
-            return this.baseRepository.ExecuteStoreProcedureParams(procedure, myObject);
+            return baseRepository.ExecuteStoreProcedureParams(procedure, myObject);
         }
     }
 }
