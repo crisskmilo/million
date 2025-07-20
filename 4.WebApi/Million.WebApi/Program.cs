@@ -24,6 +24,9 @@ using Microsoft.Extensions.DependencyInjection.Extensions;
 
 var builder = WebApplication.CreateBuilder(args);
 
+builder.Configuration
+    .AddJsonFile("appsettings.qa.json", optional: true, reloadOnChange: true);
+
 builder.Services.Add(new DependencyInjector().GetServiceCollection());
 
 var appSettings = builder.Configuration.GetSection("AppSettings").Get<AppSettings>();
@@ -36,7 +39,7 @@ builder.Services.AddDbContext<AppDbContext>((serviceProvider, options) =>
     options.UseSqlServer(connectionString);
 }, ServiceLifetime.Singleton);
 
-// Configuración de servicios
+
 builder.Services.AddCors(options =>
 {
     options.AddPolicy("CorsPolicy", builder =>
@@ -51,25 +54,29 @@ builder.Services.AddControllers()
 AddSwagger(builder.Services);
 
 // Middleware
-builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
-    .AddJwtBearer(options =>
+builder.Services.AddAuthentication(options =>
+{
+    options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+    options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+})
+.AddJwtBearer(JwtBearerDefaults.AuthenticationScheme, options =>
+{
+    options.TokenValidationParameters = new TokenValidationParameters
     {
-        options.TokenValidationParameters = new TokenValidationParameters
-        {
-            ValidateIssuer = true,
-            ValidateAudience = true,
-            ValidateLifetime = true,
-            ValidateIssuerSigningKey = true,
-            ValidIssuer = appSettings.Secret,
-            ValidAudience = appSettings.Secret,
-            IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(appSettings.Secret))
-        };
-    });
+        ValidateIssuer = true,
+        ValidateAudience = true,
+        ValidateLifetime = true,
+        ValidateIssuerSigningKey = true,
+        ValidIssuer = appSettings.Secret,
+        ValidAudience = appSettings.Secret,
+        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(appSettings.Secret))
+    };
+});
 
 var app = builder.Build();
 
 // Configuración de la aplicación
-if (app.Environment.IsDevelopment())
+if (app.Environment.IsDevelopment() || app.Environment.IsEnvironment("qa"))
 {
     app.UseDeveloperExceptionPage();
 }
@@ -84,7 +91,10 @@ app.UseAuthentication();
 app.UseAuthorization();
 app.UseRouting();
 
-app.UseMiddleware<JwtMiddleware>();
+if (!app.Environment.IsEnvironment("qa"))
+{
+    app.UseMiddleware<JwtMiddleware>();
+}
 app.UseMiddleware<ErrorHandlerMiddleware>();
 
 app.UseSwagger();
@@ -147,3 +157,5 @@ void AddSwagger(IServiceCollection services)
         });
     });
 }
+
+public partial class Program { }

@@ -6,6 +6,7 @@
     <UseAppHost>true</UseAppHost>
     <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
     <DockerfileContext>..\..</DockerfileContext>
+	<PreserveCompilationContext>true</PreserveCompilationContext>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
     <WarningLevel>0</WarningLevel>
@@ -31,5 +32,6 @@
   <ItemGroup>
     <ProjectReference Include="..\..\1.Domain\Million.Domain.Entities\Million.Domain.Entities.csproj" />
     <ProjectReference Include="..\..\2.Infraestructure\Million.Infra.IoC\Million.Infra.IoC.csproj" />
+    <ProjectReference Include="..\..\3.Application\Million.Application.Interfaces\Million.Application.Interfaces.csproj" />
   </ItemGroup>
 </Project>

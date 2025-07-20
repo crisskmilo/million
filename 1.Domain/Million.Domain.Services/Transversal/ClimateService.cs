@@ -90,7 +90,7 @@ namespace Million.Domain.Services.Transversal
             {
                 using var doc = JsonDocument.Parse(json);
 
-                if (doc != null)
+                if (doc == null)
                 {
                     throw new Exception("OpenWeatherMap API returned empty response.");
                 }
